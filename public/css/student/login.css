@@ -1,0 +1,101 @@
+/* style.css */
+
+/* General Body Styling */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    padding: 1rem 1.5rem;
+}
+
+.navbar-brand span {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.btn-outline-danger,
+.btn-outline-primary {
+    transition: 0.3s ease-in-out;
+}
+
+.btn-outline-danger:hover,
+.btn-outline-primary:hover {
+    transform: scale(1.05);
+}
+
+/* Cards */
+.card {
+    border-radius: 1.2rem;
+    border: 1px solid #e0e0e0;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge */
+.badge {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 1rem;
+}
+
+/* Vote Now Button */
+.btn-sm {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+/* Custom Utilities */
+.rounded-pill {
+    border-radius: 50rem !important;
+}
+
+.border-left-primary {
+    border-left: 5px solid #007bff !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Logo */
+img[alt="CampusHub Logo"] {
+    max-height: 70px;
+}
+
+
+body {
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main.container {
+    flex-grow: 1;
+}
+
+.card {
+    border: none;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0 20px rgba(13, 110, 253, 0.4);
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+

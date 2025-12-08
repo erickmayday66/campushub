@@ -1,0 +1,491 @@
+/* Dark Mode Styles */
+:root {
+    --dark-bg: #1a1c2e;
+    --dark-surface: #25273d;
+    --dark-text: #e0e0e0;
+    --dark-text-muted: #a0a0a0;
+    --dark-border: #3a3a4a;
+    --dark-primary: #5c7cfa;
+    --dark-secondary: #4b5eea;
+    --dark-accent: #74a0ff;
+    --dark-success: #38d9a9;
+    --dark-info: #4dabf7;
+    --dark-danger: #ff6b6b;
+    --dark-warning: #ffa94d;
+}
+
+body.dark-theme {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+/* Navbar */
+body.dark-theme .navbar {
+    background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .navbar-title,
+body.dark-theme .user-badge,
+body.dark-theme .btn-logout {
+    color: var(--dark-text);
+}
+
+body.dark-theme .user-badge {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .user-badge:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-theme .btn-logout {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .btn-logout:hover {
+    background: var(--dark-danger);
+}
+
+/* Sidebar */
+body.dark-theme .sidebar {
+    background: var(--dark-surface);
+    border-right: 1px solid var(--dark-border);
+}
+
+body.dark-theme .sidebar-header {
+    border-bottom: 1px solid var(--dark-border);
+}
+
+body.dark-theme .sidebar-header h2,
+body.dark-theme .sidebar-header p {
+    color: var(--dark-text);
+}
+
+body.dark-theme .sidebar-nav li a {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .sidebar-nav li a:hover,
+body.dark-theme .sidebar-nav li a.active {
+    background: rgba(92, 124, 250, 0.15);
+    color: var(--dark-accent);
+}
+
+body.dark-theme .logout-item {
+    border-top: 1px solid var(--dark-border);
+}
+
+body.dark-theme .logout-item button {
+    color: var(--dark-danger);
+}
+
+body.dark-theme .logout-item button:hover {
+    background: rgba(255, 107, 107, 0.15);
+}
+
+/* Main Content */
+body.dark-theme .main-content {
+    background: var(--dark-bg);
+}
+
+body.dark-theme .dashboard-header {
+    background: var(--dark-surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .dashboard-header h1,
+body.dark-theme .dashboard-header p {
+    color: var(--dark-text);
+}
+
+/* Stats Section */
+body.dark-theme .stats-row .stat-card {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .stat-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .stat-card h3 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .stat-card p {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .stat-icon.bg-primary {
+    background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+}
+
+body.dark-theme .stat-icon.bg-success {
+    background: linear-gradient(135deg, var(--dark-success), #2f9e77);
+}
+
+body.dark-theme .stat-icon.bg-info {
+    background: linear-gradient(135deg, var(--dark-info), #2c6e9b);
+}
+
+/* Elections Section */
+body.dark-theme .elections-section {
+    background: var(--dark-surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .section-header h4 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .filter-options .btn {
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-theme .filter-options .btn.active {
+    background: var(--dark-primary);
+    color: white;
+    border-color: var(--dark-primary);
+}
+
+body.dark-theme .filter-options .btn:hover:not(.active) {
+    background: var(--dark-border);
+}
+
+body.dark-theme .empty-state {
+    background: var(--dark-bg);
+    border: 1px dashed var(--dark-border);
+}
+
+body.dark-theme .empty-state i {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .empty-state h5 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .empty-state p {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .election-grid .election-card {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .election-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .election-header {
+    background: linear-gradient(135deg, var(--dark-surface), var(--dark-bg));
+    border-bottom: 1px solid var(--dark-border);
+}
+
+body.dark-theme .election-header h5 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .election-header .badge.bg-primary {
+    background: var(--dark-primary);
+}
+
+body.dark-theme .election-header .badge.bg-info {
+    background: var(--dark-info);
+}
+
+body.dark-theme .election-details p {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .election-details i {
+    color: var(--dark-primary);
+}
+
+body.dark-theme .election-actions {
+    background: var(--dark-bg);
+    border-top: 1px solid var(--dark-border);
+}
+
+body.dark-theme .btn-primary {
+    background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+    color: white;
+}
+
+body.dark-theme .btn-primary:hover {
+    box-shadow: 0 4px 12px rgba(92, 124, 250, 0.4);
+}
+
+/* Dark Mode Styles */
+:root {
+    --dark-bg: #1a1c2e;
+    --dark-surface: #25273d;
+    --dark-text: #e0e0e0;
+    --dark-text-muted: #a0a0a0;
+    --dark-border: #3a3a4a;
+    --dark-primary: #5c7cfa;
+    --dark-secondary: #4b5eea;
+    --dark-accent: #74a0ff;
+    --dark-success: #38d9a9;
+    --dark-info: #4dabf7;
+    --dark-danger: #ff6b6b;
+    --dark-warning: #ffa94d;
+}
+
+body.dark-theme {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+/* Navbar */
+body.dark-theme .navbar {
+    background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .navbar-title,
+body.dark-theme .user-badge,
+body.dark-theme .btn-logout {
+    color: var(--dark-text);
+}
+
+body.dark-theme .user-badge {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .user-badge:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-theme .btn-logout {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .btn-logout:hover {
+    background: var(--dark-danger);
+}
+
+/* Sidebar */
+body.dark-theme .sidebar {
+    background: var(--dark-surface);
+    border-right: 1px solid var(--dark-border);
+}
+
+body.dark-theme .sidebar-header {
+    border-bottom: 1px solid var(--dark-border);
+}
+
+body.dark-theme .sidebar-header h2,
+body.dark-theme .sidebar-header p {
+    color: var(--dark-text);
+}
+
+body.dark-theme .sidebar-nav li a {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .sidebar-nav li a:hover,
+body.dark-theme .sidebar-nav li a.active {
+    background: rgba(92, 124, 250, 0.15);
+    color: var(--dark-accent);
+}
+
+body.dark-theme .logout-item {
+    border-top: 1px solid var(--dark-border);
+}
+
+body.dark-theme .logout-item button {
+    color: var(--dark-danger);
+}
+
+body.dark-theme .logout-item button:hover {
+    background: rgba(255, 107, 107, 0.15);
+}
+
+/* Main Content */
+body.dark-theme .main-content {
+    background: var(--dark-bg);
+}
+
+body.dark-theme .dashboard-header {
+    background: var(--dark-surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .dashboard-header h1,
+body.dark-theme .dashboard-header p {
+    color: var(--dark-text);
+}
+
+/* Stats Section */
+body.dark-theme .stats-row .stat-card {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .stat-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .stat-card h3 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .stat-card p {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .stat-icon.bg-primary {
+    background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+}
+
+body.dark-theme .stat-icon.bg-success {
+    background: linear-gradient(135deg, var(--dark-success), #2f9e77);
+}
+
+body.dark-theme .stat-icon.bg-info {
+    background: linear-gradient(135deg, var(--dark-info), #2c6e9b);
+}
+
+/* Elections Section */
+body.dark-theme .elections-section {
+    background: var(--dark-surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .section-header h4 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .filter-options .btn {
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-theme .filter-options .btn.active {
+    background: var(--dark-primary);
+    color: white;
+    border-color: var(--dark-primary);
+}
+
+body.dark-theme .filter-options .btn:hover:not(.active) {
+    background: var(--dark-border);
+}
+
+body.dark-theme .empty-state {
+    background: var(--dark-bg);
+    border: 1px dashed var(--dark-border);
+}
+
+body.dark-theme .empty-state i {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .empty-state h5 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .empty-state p {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .election-grid .election-card {
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .election-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .election-header {
+    background: linear-gradient(135deg, var(--dark-surface), var(--dark-bg));
+    border-bottom: 1px solid var(--dark-border);
+}
+
+body.dark-theme .election-header h5 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .election-header .badge.bg-primary {
+    background: var(--dark-primary);
+}
+
+body.dark-theme .election-header .badge.bg-info {
+    background: var(--dark-info);
+}
+
+body.dark-theme .election-details p {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .election-details i {
+    color: var(--dark-primary);
+}
+
+body.dark-theme .election-actions {
+    background: var(--dark-bg);
+    border-top: 1px solid var(--dark-border);
+}
+
+body.dark-theme .btn-primary {
+    background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+    color: white;
+}
+
+body.dark-theme .btn-primary:hover {
+    box-shadow: 0 4px 12px rgba(92, 124, 250, 0.4);
+}
+
+/* Profile Section */
+body.dark-theme .profile-container {
+    background: var(--dark-bg);
+}
+
+body.dark-theme .profile-header h2 {
+    color: var(--dark-text);
+}
+
+body.dark-theme .profile-card {
+    background: var(--dark-surface);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .profile-banner {
+    background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+}
+
+body.dark-theme .profile-info {
+    background: var(--dark-surface);
+}
+
+body.dark-theme .profile-detail {
+    border-bottom: 1px solid var(--dark-border);
+}
+
+body.dark-theme .profile-detail:last-child {
+    border-bottom: none;
+}
+
+body.dark-theme .detail-icon {
+    background: rgba(92, 124, 250, 0.15);
+}
+
+body.dark-theme .detail-icon i {
+    color: var(--dark-primary);
+}
+
+body.dark-theme .detail-label {
+    color: var(--dark-text-muted);
+}
+
+body.dark-theme .detail-value {
+    color: var(--dark-text);
+}
