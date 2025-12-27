@@ -301,8 +301,9 @@
             <a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
             <a href="{{ route('admin.users.index') }}"><i class="fas fa-user-cog"></i> User Management</a>
             <a href="{{ route('admin.students.index') }}" class="active"><i class="fas fa-users"></i> Student Management</a>
-            <a href="#"><i class="fas fa-poll"></i> Election Results</a>
-            <a href="#"><i class="fas fa-university"></i> Faculty Management</a>
+            <a href="{{ route('admin.results.index') }}"><i class="fas fa-poll"></i> Election Results</a>
+            <a href="{{ route('admin.courses.index') }}"><i class="fas fa-book"></i> Course Management</a>
+            <a href="{{ route('admin.faculties.index') }}"><i class="fas fa-university"></i> Faculty Management</a>
             <a href="#"><i class="fas fa-cog"></i> System Settings</a>
         </div>
     </div>
