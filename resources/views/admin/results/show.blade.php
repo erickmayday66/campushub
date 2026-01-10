@@ -5,8 +5,7 @@
     <title>Election Results - {{ $election->title }} | CampusHub Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
     
     <style>
         :root {
@@ -31,9 +30,105 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
             color: var(--gray-900);
             min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
         }
 
-        /* Navbar */
+        /* ====================== DARK THEME ====================== */
+        body.dark-theme {
+            background: #0a0a0a;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .navbar,
+        body.dark-theme .sidebar,
+        body.dark-theme .header-card,
+        body.dark-theme .card {
+            background: rgba(18, 18, 18, 0.95) !important;
+            backdrop-filter: blur(12px);
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        body.dark-theme .sidebar-header {
+            background: rgba(18, 18, 18, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-theme th {
+            background: rgba(45, 59, 142, 0.2) !important;
+            color: var(--primary-light);
+        }
+
+        body.dark-theme td {
+            background: #1e1e1e !important;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+        }
+
+        body.dark-theme tr:hover td {
+            background: #252525 !important;
+        }
+
+        body.dark-theme .winner-row td {
+            background: rgba(46, 204, 113, 0.2) !important;
+            border-left-color: var(--success);
+        }
+
+        body.dark-theme .candidate-img {
+            border-color: #444;
+        }
+
+        body.dark-theme .no-data,
+        body.dark-theme .text-muted {
+            color: #aaaaaa !important;
+        }
+
+        /* Text readability */
+        body.dark-theme h1,
+        body.dark-theme .header-card h1,
+        body.dark-theme strong,
+        body.dark-theme .badge {
+            color: #ffffff !important;
+        }
+
+        body.dark-theme p,
+        body.dark-theme .sidebar-header p,
+        body.dark-theme small {
+            color: #cccccc !important;
+        }
+
+        body.dark-theme .sidebar-nav a {
+            color: #bbbbbb;
+        }
+
+        body.dark-theme .sidebar-nav a:hover,
+        body.dark-theme .sidebar-nav a.active {
+            background: rgba(45, 59, 142, 0.2);
+            color: var(--primary-light);
+        }
+
+        body.dark-theme .user-badge,
+        body.dark-theme .btn-logout {
+            background: rgba(45, 59, 142, 0.1);
+            border-color: rgba(45, 59, 142, 0.2);
+        }
+
+        body.dark-theme .btn-logout {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: rgba(231, 76, 60, 0.2);
+        }
+
+        body.dark-theme .btn-cancel {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cccccc;
+            border-color: #444;
+        }
+
+        body.dark-theme .btn-cancel:hover {
+            background: rgba(45, 59, 142, 0.2);
+            color: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        /* Original Light Styles (unchanged below) */
         .navbar {
             height: 70px;
             background: rgba(255,255,255,0.95);
@@ -113,7 +208,6 @@
         }
         .btn-logout:hover { background: rgba(231,76,60,0.1); transform: translateY(-2px); }
 
-        /* Sidebar */
         .sidebar {
             width: 280px;
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
@@ -285,7 +379,7 @@
 </head>
 <body>
 
-    <!-- Navbar — Clean icon only -->
+    <!-- Navbar -->
     <nav class="navbar">
         <button id="toggle-btn" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
@@ -321,7 +415,7 @@
     <!-- Main Content -->
     <div class="main-content">
 
-        <!-- Professional Header with Back Button -->
+        <!-- Header with Back Button -->
         <div class="header-card">
             <div>
                 <h1>Election Results: {{ $election->title }}</h1>
@@ -331,7 +425,6 @@
                 </p>
             </div>
 
-            <!-- Professional Back Button — perfectly styled -->
             <a href="{{ route('admin.results.index') }}" class="btn-cancel d-inline-flex align-items-center gap-2">
                 Back to All Elections
             </a>
@@ -388,6 +481,7 @@
     </div>
 
     <script>
+        // Sidebar toggle
         document.getElementById('toggle-btn').addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('open');
         });
@@ -397,6 +491,24 @@
             const toggle = document.getElementById('toggle-btn');
             if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
                 sidebar.classList.remove('open');
+            }
+        });
+
+        // === DARK THEME AUTO-DETECTION & PERSISTENCE ===
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark' || 
+           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            body.classList.add('dark-theme');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
             }
         });
     </script>

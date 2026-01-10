@@ -5,8 +5,7 @@
     <title>Election Results | CampusHub Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
 
     <style>
         :root {
@@ -29,9 +28,110 @@
             color: var(--gray-800);
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background 0.4s, color 0.4s;
         }
 
-        /* Navbar */
+        /* ====================== DARK THEME ====================== */
+        body.dark-theme {
+            background: #0a0a0a;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .navbar,
+        body.dark-theme .sidebar,
+        body.dark-theme .dashboard-header,
+        body.dark-theme .card {
+            background: rgba(18, 18, 18, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        body.dark-theme .sidebar-header,
+        body.dark-theme .logout-item {
+            background: rgba(18, 18, 18, 0.5);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-theme th {
+            background: rgba(45, 59, 142, 0.2) !important;
+            color: var(--primary-light);
+        }
+
+        body.dark-theme td {
+            background: #1e1e1e !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        body.dark-theme tr:hover td {
+            background: #252525 !important;
+        }
+
+        /* Text & badges */
+        body.dark-theme h1,
+        body.dark-theme strong,
+        body.dark-theme .dashboard-header h1 {
+            color: #ffffff !important;
+        }
+
+        body.dark-theme p,
+        body.dark-theme .sidebar-header p,
+        body.dark-theme .alert-success,
+        body.dark-theme .alert-danger {
+            color: #cccccc !important;
+        }
+
+        body.dark-theme .sidebar-nav li a {
+            color: #bbbbbb;
+        }
+
+        body.dark-theme .sidebar-nav li a:hover,
+        body.dark-theme .sidebar-nav li a.active {
+            background: rgba(45, 59, 142, 0.2);
+            color: var(--primary-light);
+        }
+
+        body.dark-theme .user-badge,
+        body.dark-theme .btn-logout {
+            background: rgba(45, 59, 142, 0.1);
+            border-color: rgba(45, 59, 142, 0.2);
+        }
+
+        body.dark-theme .btn-logout:hover {
+            background: rgba(45, 59, 142, 0.2);
+        }
+
+        body.dark-theme .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        }
+
+        body.dark-theme .btn-primary:hover {
+            box-shadow: 0 8px 20px rgba(45, 59, 142, 0.5);
+        }
+
+        body.dark-theme .alert-success {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+
+        body.dark-theme .alert-danger {
+            background: rgba(231, 76, 60, 0.15);
+            color: #ff8c8c;
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        /* Scope badge */
+        body.dark-theme span[style*="background: var(--primary-color)"] {
+            background: var(--primary-light) !important;
+            opacity: 0.9;
+        }
+
+        /* Empty state */
+        body.dark-theme .no-results {
+            color: #888;
+        }
+
+        /* Original Light Styles (unchanged below) */
         .navbar {
             width: 100%; height: var(--navbar-height);
             background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
@@ -83,7 +183,6 @@
         }
         .btn-logout:hover { background: rgba(231,76,60,0.1); transform: translateY(-2px); }
 
-        /* Sidebar - Exact match to your original reference */
         .sidebar {
             width: var(--sidebar-width);
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
@@ -147,7 +246,6 @@
             background: rgba(231,76,60,0.05); color: var(--danger-color);
         }
 
-        /* Main Content */
         .main-content {
             margin-left: 0; padding: calc(var(--navbar-height) + 30px) 30px 100px;
             transition: margin-left 0.3s ease; min-height: 100vh;
@@ -166,8 +264,7 @@
         }
         .dashboard-header h1::before {
             content: ''; width: 6px; height: 40px;
-            background: linear-gradient(to bottom, var(--primary-color), var(--primary-light));
-            border-radius: 3px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--primary-light)); border-radius: 3px;
         }
 
         .card {
@@ -200,22 +297,6 @@
             border: 1px solid rgba(231,76,60,0.2); border-radius: 12px;
             padding: 16px 20px; margin-bottom: 25px; font-weight: 500;
         }
-
-        .fab {
-            position: fixed; bottom: 30px; right: 30px; width: 62px; height: 62px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem; box-shadow: 0 10px 30px rgba(45,59,142,0.4); z-index: 1000;
-            transition: all 0.3s; text-decoration: none;
-        }
-        .fab:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(45,59,142,0.5); }
-        .fab .tooltip-text {
-            position: absolute; right: 75px; background: var(--primary-color); color: white;
-            padding: 10px 18px; border-radius: 30px; font-size: 0.95rem; font-weight: 500;
-            white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.3s ease;
-        }
-        .fab:hover .tooltip-text { opacity: 1; visibility: visible; right: 80px; }
-        @media (max-width: 768px) { .fab .tooltip-text { display: none; } }
     </style>
 </head>
 <body>
@@ -228,9 +309,6 @@
         <span class="navbar-title">CampusHub Admin</span>
 
         <div class="user-actions">
-            <div class="notification-badge">
-                <i class="fas fa-bell"></i>
-            </div>
             <div class="user-badge">
                 <div class="avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
                 <span>{{ Auth::user()->name }}</span>
@@ -245,7 +323,7 @@
         </div>
     </nav>
 
-    <!-- Sidebar - Exact match to your original -->
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="avatar-large"><i class="fas fa-user-shield"></i></div>
@@ -332,6 +410,7 @@
     </div>
 
     <script>
+        // Sidebar toggle
         const toggleBtn = document.getElementById('toggle-btn');
         const sidebar = document.getElementById('sidebar');
 
@@ -345,6 +424,24 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') sidebar.classList.remove('open');
+        });
+
+        // === DARK THEME AUTO-DETECTION & PERSISTENCE ===
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark' || 
+           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            body.classList.add('dark-theme');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+            }
         });
     </script>
 </body>

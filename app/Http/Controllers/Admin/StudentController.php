@@ -113,50 +113,73 @@ class StudentController extends Controller
         ]);
     }
 
-   public function import(Request $request)
+
+public function import(Request $request)
 {
+    set_time_limit(300);
+
     $request->validate([
         'file' => 'required|file|mimes:xlsx,xls',
     ]);
 
-    $file = $request->file('file');
-    $rows = IOFactory::load($file->getRealPath())->getActiveSheet()->toArray(null, true, true, true);
+    $rows = \PhpOffice\PhpSpreadsheet\IOFactory::load(
+        $request->file('file')->getRealPath()
+    )->getActiveSheet()->toArray(null, true, true, true);
 
-    unset($rows[1]); // skip header
+    unset($rows[1]); // header
+
+    // 🔥 Load courses once
+    $courses = \App\Models\Course::with('faculty')->get()
+        ->keyBy(fn ($c) => trim($c->name));
+
+    // 🔥 Load existing students once
+    $existingRegNos = \App\Models\Student::pluck('registration_number')->flip();
+
+    $passwordCache = [];
+    $insertData = [];
 
     foreach ($rows as $row) {
-        $name = $row['A'] ?? null;
-        $regNo = $row['B'] ?? null;
-        $courseName = $row['C'] ?? null;
+        $name = trim($row['A'] ?? '');
+        $regNo = trim($row['B'] ?? '');
+        $courseName = trim($row['C'] ?? '');
 
-        if (!$name || !$regNo || !$courseName) {
-            continue;
+        if ($name === '' || $regNo === '' || $courseName === '') continue;
+        if (isset($existingRegNos[$regNo])) continue;
+
+        $course = $courses[$courseName] ?? null;
+        if (!$course) continue;
+
+        // SAME LOGIC
+        $parts = preg_split('/\s+/', $name);
+        $lastName = strtoupper(end($parts));
+
+        if (!isset($passwordCache[$lastName])) {
+            $passwordCache[$lastName] = \Hash::make($lastName);
         }
 
-        $course = \App\Models\Course::with('faculty')->where('name', $courseName)->first();
-        if (!$course) {
-            continue;
-        }
-
-        $exists = \App\Models\Student::where('registration_number', $regNo)->exists();
-        if ($exists) continue;
-
-        $registrationYear = intval(substr($regNo, 0, 4)); // this will be 2023 from 2023/0455
-
-        \App\Models\Student::create([
+        $insertData[] = [
             'name' => $name,
             'registration_number' => $regNo,
             'course_id' => $course->id,
             'faculty_id' => $course->faculty->id ?? null,
-            'registration_year' => $registrationYear,
-            'password' => Hash::make('12345678'),
+            'registration_year' => (int) substr($regNo, 0, 4),
+            'password' => $passwordCache[$lastName],
             'must_change_password' => true,
-        ]);
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
+        // 🔥 Insert in chunks
+        if (count($insertData) === 500) {
+            \DB::table('students')->insert($insertData);
+            $insertData = [];
+        }
     }
 
-    return redirect()->back()->with('success', 'Students imported successfully!');
+    if (!empty($insertData)) {
+        \DB::table('students')->insert($insertData);
+    }
+
+    return back()->with('success', 'Students imported successfully!');
 }
-
-
 }
-

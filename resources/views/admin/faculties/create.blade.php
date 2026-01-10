@@ -5,283 +5,14 @@
     <title>Add Faculty | CampusHub Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
+ 
+    <link rel="stylesheet" href="{{ asset('css/admin/Faculty_create.css') }}">
     
-    <style>
-        :root {
-            --primary: #2d3b8e;
-            --primary-light: #4a5ccc;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --gray-100: #f8fafc;
-            --gray-200: #e4e7eb;
-            --gray-300: #cbd2d9;
-            --gray-600: #616e7c;
-            --gray-800: #323f4b;
-            --gray-900: #1e293b;
-            --radius: 16px;
-            --shadow: 0 15px 35px rgba(0,0,0,0.08);
-            --transition: all 0.3s ease;
-        }
-
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
-            color: var(--gray-900);
-            min-height: 100vh;
-        }
-
-        /* Navbar */
-        .navbar {
-            height: 70px;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(12px);
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1100;
-            display: flex;
-            align-items: center;
-            padding: 0 30px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.8);
-        }
-        #toggle-btn {
-            background: rgba(45,59,142,0.1);
-            border: none;
-            color: var(--primary);
-            width: 40px; height: 40px;
-            border-radius: 12px;
-            cursor: pointer;
-            margin-right: 20px;
-            transition: var(--transition);
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #toggle-btn:hover { background: rgba(45,59,142,0.2); transform: rotate(90deg); }
-
-        .navbar-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .navbar-title::before {
-            content: '';
-            width: 8px;
-            height: 30px;
-            background: linear-gradient(to bottom, var(--primary), var(--primary-light));
-            border-radius: 4px;
-        }
-
-        .user-badge {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(45,59,142,0.05);
-            padding: 8px 15px 8px 8px;
-            border-radius: 30px;
-            border: 1px solid rgba(45,59,142,0.1);
-        }
-        .user-badge .avatar {
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .btn-logout {
-            background: rgba(231,76,60,0.05);
-            color: var(--danger);
-            border: 1px solid rgba(231,76,60,0.1);
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-logout:hover { background: rgba(231,76,60,0.1); transform: translateY(-2px); }
-
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-            height: 100vh;
-            position: fixed;
-            top: 0; left: 0;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            box-shadow: 5px 0 30px rgba(0,0,0,0.05);
-            padding-top: 70px;
-            border-right: 1px solid rgba(255,255,255,0.8);
-        }
-        .sidebar.open { transform: translateX(0); }
-        .sidebar-header { text-align: center; padding: 30px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .avatar-large {
-            width: 90px; height: 90px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            font-size: 2.2rem;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 4px solid rgba(255,255,255,0.8);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            padding: 14px 20px;
-            color: var(--gray-600);
-            text-decoration: none;
-            margin: 4px 16px;
-            border-radius: 12px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-        .sidebar-nav a:hover { background: rgba(45,59,142,0.05); color: var(--primary); transform: translateX(5px); }
-        .sidebar-nav a.active {
-            background: linear-gradient(90deg, rgba(45,59,142,0.1), rgba(45,59,142,0.05));
-            color: var(--primary);
-            font-weight: 600;
-            border-left: 4px solid var(--primary);
-        }
-        .sidebar-nav i { margin-right: 12px; width: 20px; text-align: center; }
-
-        .main-content {
-            margin-left: 0;
-            padding: calc(70px + 40px) 40px 60px;
-            transition: margin-left 0.3s ease;
-        }
-        .sidebar.open ~ .main-content { margin-left: 280px; }
-
-        .header-card {
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(12px);
-            border-radius: var(--radius);
-            padding: 32px;
-            box-shadow: var(--shadow);
-            margin-bottom: 32px;
-            border: 1px solid rgba(255,255,255,0.8);
-        }
-        .header-card h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .header-card h1::before {
-            content: '';
-            width: 6px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--primary), var(--primary-light));
-            border-radius: 4px;
-        }
-
-        .form-card {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(16px);
-            border-radius: var(--radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.8);
-            max-width: 620px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 28px;
-        }
-        .form-label {
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 10px;
-            display: block;
-            font-size: 0.95rem;
-        }
-        .form-control {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1.5px solid var(--gray-300);
-            border-radius: 12px;
-            font-size: 1rem;
-            background: white;
-            transition: var(--transition);
-        }
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 5px rgba(45,59,142,0.12);
-            outline: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 8px 25px rgba(45,59,142,0.3);
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(45,59,142,0.4);
-        }
-
-        .btn-cancel {
-            background: rgba(255,255,255,0.9);
-            color: var(--gray-700);
-            border: 1.5px solid var(--gray-300);
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: var(--transition);
-        }
-        .btn-cancel:hover {
-            background: rgba(45,59,142,0.05);
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .alert-danger {
-            background: rgba(231,76,60,0.1);
-            color: var(--danger);
-            border: 1px solid rgba(231,76,60,0.2);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 28px;
-        }
-    </style>
 </head>
 <body>
 
-    <!-- Navbar — Clean icon only -->
+    <!-- Navbar -->
     <nav class="navbar">
         <button id="toggle-btn" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
@@ -348,7 +79,6 @@
                     <input type="text" name="code" class="form-control" value="{{ old('code') }}" required placeholder="e.g., FSCI">
                 </div>
 
-                <!-- Back (left) — Save Faculty (right) -->
                 <div style="display: flex; gap: 24px; justify-content: space-between; align-items: center; margin-top: 32px;">
                     <a href="{{ route('admin.faculties.index') }}" class="btn-cancel">
                         Back
@@ -362,6 +92,7 @@
     </div>
 
     <script>
+        // Sidebar toggle
         document.getElementById('toggle-btn').addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('open');
         });
@@ -371,6 +102,24 @@
             const toggle = document.getElementById('toggle-btn');
             if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
                 sidebar.classList.remove('open');
+            }
+        });
+
+        // === DARK THEME AUTO-DETECTION & PERSISTENCE ===
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark' || 
+           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            body.classList.add('dark-theme');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
             }
         });
     </script>

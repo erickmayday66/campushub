@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Course | CampusHub Admin</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
-    
-    <style>
-        :root {
+:root {
             --primary: #2d3b8e;
             --primary-light: #4a5ccc;
             --success: #2ecc71;
@@ -66,7 +56,7 @@
             box-shadow: 0 0 0 5px rgba(45, 59, 142, 0.2);
         }
 
-        /* Text readability */
+        /* Text readability in dark mode */
         body.dark-theme h1,
         body.dark-theme .header-card h1,
         body.dark-theme .form-label,
@@ -265,6 +255,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
+            margin-bottom: 8px;
         }
         .header-card h1::before {
             content: '';
@@ -272,6 +263,11 @@
             height: 40px;
             background: linear-gradient(to bottom, var(--primary), var(--primary-light));
             border-radius: 4px;
+        }
+        .header-card p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            line-height: 1.7;
         }
 
         .form-card {
@@ -357,131 +353,3 @@
             padding: 16px 20px;
             margin-bottom: 28px;
         }
-    </style>
-</head>
-<body>
-
-    <!-- Navbar -->
-    <nav class="navbar">
-        <button id="toggle-btn"><i class="fas fa-bars"></i></button>
-        <div class="navbar-title">CampusHub Admin</div>
-        <div class="user-badge">
-            <div class="avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
-            <span>{{ Auth::user()->name }}</span>
-        </div>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn-logout">Logout</button>
-        </form>
-    </nav>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="avatar-large"><i class="fas fa-user-shield"></i></div>
-            <h2>{{ Auth::user()->name }}</h2>
-            <p>{{ ucfirst(Auth::user()->role ?? 'Administrator') }}</p>
-        </div>
-        <div class="sidebar-nav">
-            <a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="{{ route('admin.users.index') }}"><i class="fas fa-user-cog"></i> User Management</a>
-            <a href="{{ route('admin.students.index') }}"><i class="fas fa-users"></i> Student Management</a>
-            <a href="{{ route('admin.courses.index') }}" class="active"><i class="fas fa-book"></i> Course Management</a>
-            <a href="{{ route('admin.faculties.index') }}"><i class="fas fa-university"></i> Faculty Management</a>
-            <a href="#"><i class="fas fa-cog"></i> System Settings</a>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-
-        <div class="header-card">
-            <h1>Edit Course</h1>
-            <p>Update course details including name, code, duration, and assigned faculty.</p>
-        </div>
-
-        <div class="form-card">
-
-            @if(session('success'))
-                <div class="alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            <form action="{{ route('admin.courses.update', $course->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-
-                <div class="form-group">
-                    <label class="form-label">Course Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ old('name', $course->name) }}" required placeholder="e.g., Computer Science">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Course Code</label>
-                    <input type="text" name="code" class="form-control" value="{{ old('code', $course->code) }}" required placeholder="e.g., CS">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Duration (Years)</label>
-                    <input type="number" name="duration_years" class="form-control" value="{{ old('duration_years', $course->duration_years) }}" min="1" max="10" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Faculty</label>
-                    <select name="faculty_id" class="form-select" required>
-                        <option value="" disabled>Select Faculty</option>
-                        @foreach($faculties as $faculty)
-                            <option value="{{ $faculty->id }}" {{ old('faculty_id', $course->faculty_id) == $faculty->id ? 'selected' : '' }}>
-                                {{ $faculty->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div style="display: flex; gap: 24px; justify-content: space-between; align-items: center; margin-top: 32px;">
-                    <a href="{{ route('admin.courses.index') }}" class="btn-cancel">
-                        Back
-                    </a>
-                    <button type="submit" class="btn-primary">
-                        Update Course
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // Sidebar toggle
-        document.getElementById('toggle-btn').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('open');
-        });
-
-        document.addEventListener('click', (e) => {
-            const sidebar = document.getElementById('sidebar');
-            const toggle = document.getElementById('toggle-btn');
-            if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
-                sidebar.classList.remove('open');
-            }
-        });
-
-        // === DARK THEME AUTO-DETECTION & PERSISTENCE ===
-        const body = document.body;
-
-        if (localStorage.getItem('theme') === 'dark' || 
-           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            body.classList.add('dark-theme');
-        }
-
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('theme')) {
-                if (e.matches) {
-                    body.classList.add('dark-theme');
-                } else {
-                    body.classList.remove('dark-theme');
-                }
-            }
-        });
-    </script>
-</body>
-</html>

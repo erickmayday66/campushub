@@ -19,6 +19,10 @@ use App\Http\Controllers\Student\ProfileController;
 use App\Http\Controllers\ManagerDashboardController;
 use App\Http\Controllers\ManagerSettingsController;
 use App\Http\Controllers\Student\StudentResultsController;
+use App\Http\Controllers\Admin\SettingController;
+
+
+
 // Homepage & Logout
 Route::get('/', function () {
     return view('welcome');
@@ -64,6 +68,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])
         Route::get('/fetch-student/{regno}', [CandidateController::class, 'fetchStudent'])
             ->name('fetch.student')
             ->where('regno', '.*');
+
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+        Route::post('/settings/profile', [SettingController::class, 'updateProfile'])->name('settings.profile');
+        Route::post('/settings/password', [SettingController::class, 'updatePassword'])->name('settings.password');
     });
 
 // Manager Dashboard & Routes

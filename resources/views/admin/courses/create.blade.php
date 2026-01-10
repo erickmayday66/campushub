@@ -5,8 +5,7 @@
     <title>Add Course | CampusHub Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
     
     <style>
         :root {
@@ -31,9 +30,103 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
             color: var(--gray-900);
             min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
         }
 
-        /* Navbar & Sidebar */
+        /* ====================== DARK THEME ====================== */
+        body.dark-theme {
+            background: #0a0a0a;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .navbar,
+        body.dark-theme .sidebar,
+        body.dark-theme .header-card,
+        body.dark-theme .form-card {
+            background: rgba(18, 18, 18, 0.95) !important;
+            backdrop-filter: blur(12px);
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        body.dark-theme .sidebar-header {
+            background: rgba(18, 18, 18, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-theme .form-control,
+        body.dark-theme .form-select {
+            background: #1e1e1e;
+            border-color: #444;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .form-control:focus,
+        body.dark-theme .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 5px rgba(45, 59, 142, 0.2);
+        }
+
+        /* Text readability */
+        body.dark-theme h1,
+        body.dark-theme .header-card h1,
+        body.dark-theme .form-label,
+        body.dark-theme strong {
+            color: #ffffff !important;
+        }
+
+        body.dark-theme .header-card p,
+        body.dark-theme .sidebar-header p {
+            color: #aaaaaa !important;
+        }
+
+        body.dark-theme .sidebar-nav a {
+            color: #bbbbbb;
+        }
+
+        body.dark-theme .sidebar-nav a:hover,
+        body.dark-theme .sidebar-nav a.active {
+            background: rgba(45, 59, 142, 0.2);
+            color: var(--primary-light);
+        }
+
+        body.dark-theme .user-badge,
+        body.dark-theme .btn-logout {
+            background: rgba(45, 59, 142, 0.1);
+            border-color: rgba(45, 59, 142, 0.2);
+        }
+
+        body.dark-theme .btn-logout {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: rgba(231, 76, 60, 0.2);
+        }
+
+        body.dark-theme .btn-cancel {
+            background: rgba(255, 255, 255, 0.05);
+            color: #cccccc;
+            border-color: #444;
+        }
+
+        body.dark-theme .btn-cancel:hover {
+            background: rgba(45, 59, 142, 0.2);
+            color: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        body.dark-theme .alert-danger {
+            background: rgba(231, 76, 60, 0.15);
+            color: #ff8c8c;
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        body.dark-theme .alert-danger strong {
+            color: #ffffff;
+        }
+
+        body.dark-theme .alert-danger ul li {
+            color: #ffaaaa;
+        }
+
+        /* Original Light Styles (unchanged below) */
         .navbar {
             height: 70px;
             background: rgba(255,255,255,0.95);
@@ -358,7 +451,6 @@
                     </select>
                 </div>
 
-                <!-- Back (left) → Save Course (right) -->
                 <div style="display: flex; gap: 24px; justify-content: space-between; align-items: center; margin-top: 32px;">
                     <a href="{{ route('admin.courses.index') }}" class="btn-cancel">
                         Back
@@ -372,6 +464,7 @@
     </div>
 
     <script>
+        // Sidebar toggle
         document.getElementById('toggle-btn').addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('open');
         });
@@ -381,6 +474,24 @@
             const toggle = document.getElementById('toggle-btn');
             if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
                 sidebar.classList.remove('open');
+            }
+        });
+
+        // === DARK THEME AUTO-DETECTION & PERSISTENCE ===
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark' || 
+           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            body.classList.add('dark-theme');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
             }
         });
     </script>

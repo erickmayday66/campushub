@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Student | CampusHub</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap/css/bootstrap.min.css') }}">
     <link href="{{ asset('css/student/style.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('css/admin/student_edit.css') }}">
+    
 </head>
 <body>
+
     <div class="container mt-5">
         <h3 class="text-primary mb-4"><i class="fas fa-user-edit text-warning"></i> Edit Student</h3>
 
@@ -60,5 +66,27 @@
             <a href="{{ route('admin.students.index') }}" class="btn btn-secondary ms-2">Cancel</a>
         </form>
     </div>
+
+    <script>
+        // === DARK THEME AUTO-DETECTION & PERSISTENCE ===
+        const body = document.body;
+
+        // Load saved theme or detect system preference
+        if (localStorage.getItem('theme') === 'dark' || 
+           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            body.classList.add('dark-theme');
+        }
+
+        // Listen for system theme changes (only if user hasn't manually set it)
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    body.classList.add('dark-theme');
+                } else {
+                    body.classList.remove('dark-theme');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
